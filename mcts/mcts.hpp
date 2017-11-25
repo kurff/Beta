@@ -2,7 +2,7 @@
 #define __MCTS_HPP__
 
 
-namespace beta{
+namespace Beta{
 template <typename State>
 class MCTS{
     public:
