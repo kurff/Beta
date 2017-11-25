@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package beta;
+
+message TreeNodeProto{
+
+
+}
+
+message TreeProto{
+
+}
