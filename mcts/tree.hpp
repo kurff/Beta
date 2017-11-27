@@ -6,9 +6,10 @@ using namespace std;
 
 #include "glog/logging.h"
 
+
 namespace Beta{
 
-template<typename DType>
+template<typename Context>
 class Node{
     
     public:
@@ -33,7 +34,7 @@ class Node{
     protected:
         vector<Node*> child_;
         vector<Node*> parent_;
-        DType data_;
+        Context data_;
         float N_;
         float W_;
         float Q_;
@@ -43,7 +44,7 @@ class Node{
 };
 
 
-template<typename DType>
+template<typename Context>
 class Tree{
     public:
         Tree(){
@@ -73,7 +74,7 @@ class Tree{
         }
 
     protected:
-        vector<Node<DType > > tree_;
+        vector<Node<Context > > tree_;
         
 
 };
