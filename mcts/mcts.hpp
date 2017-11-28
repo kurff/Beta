@@ -3,13 +3,19 @@
 
 
 namespace Beta{
-template <typename State>
+template <typename Context>
 class MCTS{
     public:
+        MCTS(){
+
+        }
+        ~MCTS(){
+
+        }
 
 
     protected:
-        
+        Context context_;
 
 
 };
