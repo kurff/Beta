@@ -32,8 +32,8 @@ namespace Beta{
         std::vector<Action> actions_;
   };
  
-
-  class GoContext: public Context{
+  template<typename State, typename Action>
+  class GoContext: public Context<State, Action>{
     public:
       GoContext(){}
       ~GoContext(){}
