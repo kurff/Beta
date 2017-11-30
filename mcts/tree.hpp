@@ -9,7 +9,7 @@ using namespace std;
 
 namespace Beta{
 
-template<typename Context>
+template<typename State>
 class Node{
     
     public:
@@ -34,7 +34,7 @@ class Node{
     protected:
         vector<Node*> child_;
         vector<Node*> parent_;
-        Context data_;
+        State state_;
         float N_;
         float W_;
         float Q_;
@@ -44,7 +44,7 @@ class Node{
 };
 
 
-template<typename Context>
+template<typename State>
 class Tree{
     public:
         Tree(){
@@ -63,6 +63,10 @@ class Tree{
 
         }
 
+        void reset_root(){
+
+        }
+
         void select(){
 
         }
@@ -73,8 +77,18 @@ class Tree{
 
         }
 
+        void run(){
+            select();
+            expand_and_evaluate();
+            backup();
+
+        }
+
+
+
+
     protected:
-        vector<Node<Context > > tree_;
+        vector<Node<State > > tree_;
         
 
 };

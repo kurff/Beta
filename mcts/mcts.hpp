@@ -1,9 +1,12 @@
 #ifndef __MCTS_HPP__
 #define __MCTS_HPP__
 
+#include "core/context.hpp"
+#include "tree.hpp"
 
 namespace Beta{
-template <typename Context>
+template <typename State, typename Action>
+//multiple thread run
 class MCTS{
     public:
         MCTS(){
@@ -13,9 +16,21 @@ class MCTS{
 
         }
 
+        bool init(){
+            tree_ = shared_ptr<Tree<State> >(new Tree<State>());
+            context_ = shared_ptr<Context<State, Action> >(new Context<State, Action>());
+            return true;
+        }
 
+        void run(){
+
+
+        }
     protected:
-        Context context_;
+        shared_ptr<Context<State, Action> > context_;
+        shared_ptr<Tree<State> > tree_;
+
+
 
 
 };

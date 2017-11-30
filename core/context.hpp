@@ -6,6 +6,7 @@
 
 // context of mcts.hpp
 // go can be seen as a special case of context
+// get features 
 
 namespace Beta{
   
@@ -21,8 +22,8 @@ namespace Beta{
         }
 
         // get current state
-        virtual void get_state() = 0;
-        virtual void get_features() = 0;
+        virtual void get_current_state() = 0;
+        virtual void get_current_features() = 0;
         //virtual void self_play() = 0;
         virtual void get_next_state(Action& action) = 0;
 
@@ -37,6 +38,17 @@ namespace Beta{
     public:
       GoContext(){}
       ~GoContext(){}
+      void get_current_state() {
+
+      }
+      void get_current_features(){
+
+      }
+      void get_next_state(){
+        
+      }
+
+
     protected:
       
 

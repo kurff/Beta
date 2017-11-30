@@ -4,23 +4,6 @@
 #include "caffe2/core/tensor.h"
 
 namespace Beta{
-    class State{
-        public:
-            State(){
-
-            }
-            ~State(){
-
-            }
-
-            
-
-        protected:
-            
-            
-
-    };
-
     class GoState{
         public:
             GoState(){}
@@ -28,6 +11,7 @@ namespace Beta{
         protected:
         // 19 x 19
             Tensor<TensorCPU> state_;
+            
 
 
 

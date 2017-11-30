@@ -3,38 +3,26 @@
 
 #include <vector>
 
-
+#include "caffe2/core/tensor.h"
+using namespace caffe2;
 namespace Beta{
 
 
-
-
-class Action{
-    public:
-        Action(){
-
-        }
-        
-        ~Action(){
-
-        }
-
-
-        virtual void play() = 0;
-
-    protected:
-};
-
 class GoAction{
     public:
-        GoAction(){
+        GoAction():x_(0),y_(0){
 
         }
         ~GoAction(){
 
         }
 
-        void play(){
+        //template<>
+        // choose action 
+
+        void play(const Tensor<CPUContext>& probability){
+            
+
             
         }
         
