@@ -3,6 +3,7 @@
 
 #include "core/context.hpp"
 #include "tree.hpp"
+#include <queue>
 
 namespace Beta{
 template <typename State, typename Action>
@@ -23,12 +24,13 @@ class MCTS{
         }
 
         void run(){
-
+            tree_->run();
 
         }
     protected:
         shared_ptr<Context<State, Action> > context_;
         shared_ptr<Tree<State> > tree_;
+        
 
 
 

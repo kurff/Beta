@@ -2,6 +2,8 @@
 #define __TREE_HPP__
 
 #include <vector>
+#include <map>
+#include <string>
 using namespace std;
 
 #include "glog/logging.h"
@@ -13,9 +15,10 @@ template<typename State>
 class Node{
     
     public:
-        Node():N_(0.0f),W_(0.0f),Q_(0.0f),P(0.0f){
+        Node(string name):N_(0.0f),W_(0.0f),Q_(0.0f),P(0.0f), index_(0), name_(name){
             child_.clear();
             parent_.clear();
+            
         }
 
 
@@ -35,6 +38,8 @@ class Node{
         vector<Node*> child_;
         vector<Node*> parent_;
         State state_;
+        int index_;
+        string name_;
         float N_;
         float W_;
         float Q_;
@@ -54,7 +59,10 @@ class Tree{
 
         }
 
-        void add_node(Node<DType>* node){
+        void add_node(Node<State>* leaf_node, Node<State>* node){
+            //tree_.push_back(node);
+            //leaf_node->child_ = node;
+
 
 
         }
@@ -88,7 +96,7 @@ class Tree{
 
 
     protected:
-        vector<Node<State > > tree_;
+        map< string,Node<State > > tree_;
         
 
 };

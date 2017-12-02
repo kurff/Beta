@@ -10,7 +10,8 @@ namespace Beta{
             ~GoState(){}
         protected:
         // 19 x 19
-            Tensor<TensorCPU> state_;
+            Tensor<TensorCPU> go_state_;
+            
             
 
 
