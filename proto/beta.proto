@@ -10,3 +10,8 @@ message TreeNodeProto{
 message TreeProto{
 
 }
+
+message Parameters{
+    required int L_; // the depth of layer L used to MCTS
+
+}

@@ -4,7 +4,10 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <queue>
+
 using namespace std;
+
 
 #include "glog/logging.h"
 
@@ -52,7 +55,7 @@ class Node{
 template<typename State>
 class Tree{
     public:
-        Tree(){
+        Tree(int L):L_(L){
 
         }
         ~Tree(){
@@ -80,6 +83,9 @@ class Tree{
         }
         void expand_and_evaluate(){
 
+
+            // push leaf node into leafs_ for evaluation
+
         }
         void backup(){
 
@@ -97,7 +103,8 @@ class Tree{
 
     protected:
         map< string,Node<State > > tree_;
-        
+        queue<Node<State>* > leafs_;
+        int L_;
 
 };
 
