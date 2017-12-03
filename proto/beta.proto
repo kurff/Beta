@@ -1,17 +1,10 @@
 syntax = "proto2";
 
-package beta;
+package Beta;
 
-message TreeNodeProto{
-
-
-}
-
-message TreeProto{
-
-}
+//message 
 
 message Parameters{
-    required int L_; // the depth of layer L used to MCTS
-
+    required int32 L=1 [default = 1]; // the depth of layer L used to MCTS
+    
 }

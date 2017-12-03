@@ -25,6 +25,9 @@ class GoAction{
 
             
         }
+
+        int x(){return x_;}
+        int y(){return y_;}
         
     protected:
         int x_;

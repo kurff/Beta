@@ -3,6 +3,7 @@
 
 #include "core/context.hpp"
 #include "tree.hpp"
+#include "proto/beta.pb.h"
 #include <queue>
 
 namespace Beta{
@@ -17,13 +18,13 @@ class MCTS{
 
         }
 
-        bool init(){
-            tree_ = shared_ptr<Tree<State> >(new Tree<State>());
+        bool init(int L){
+            tree_ = shared_ptr<Tree<State> >(new Tree<State>(L));
             context_ = shared_ptr<Context<State, Action> >(new Context<State, Action>());
             return true;
         }
 
-        void run(){
+        void run(State root){
             tree_->run();
 
         }
