@@ -1,7 +1,10 @@
+cmake_minimum_required(VERSION 3.5)
 project(Beta)
 option(test "Build all tests." ON)
 SET(CMAKE_C_COMPILER g++)
 add_compile_options(-std=c++11)
+
+link_directories(/usr/local/lib)
 
 if (test)
 enable_testing()
