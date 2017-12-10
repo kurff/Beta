@@ -167,9 +167,29 @@ class Tree{
             add_node(node);
         }
 
-        void select(){
-            
+        void select(Node<State>* root){
+            queue<Node<State>* > cache;
+            cache.push(root);
+            Node<State>* best;
+            while(cache.size()){
+                Node<State>* ele = cache.front();
+                DLOG(INFO)<<"visit "<< ele->name()<<" index: "<<ele->index()<<" child size: "<< ele->schild().size();
+                float maxQ = 0;
 
+
+                for(Iterator it = ele->schild().begin(); it != ele->schild().end(); ++ it){
+                    if(maxQ <= it->second->Q() + it->second->U()){
+                        maxQ = it->second->Q() + it->second->U();
+                        best = it->second;
+                    }
+                    
+                    cache.push(best);
+                }
+                cache.pop();
+
+            }
+
+            
         }
         void expand_and_evaluate(){
 

@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "mcts/tree.hpp"
+#include "core/parameters.hpp"
 using namespace Beta;
 TEST(NodeTest, Allocate){
     Node<int>* node = new Node<int>("1");
@@ -45,3 +46,9 @@ TEST(TreeTest, AddDeleteNode){
 }
 
 
+TEST(PARA, test){
+    //Parameters* param = new Parameters();
+    Parameters* param = global_parameters();
+    read_from_text("parameters.txt", param);
+    
+}

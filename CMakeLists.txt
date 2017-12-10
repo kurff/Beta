@@ -8,8 +8,8 @@ link_directories(/usr/local/lib)
 
 if (test)
 enable_testing()
-add_executable(test_tree  test/test_tree.cc)
-target_link_libraries(test_tree gtest gtest_main glog)
+add_executable(test_tree  test/test_tree.cc proto/beta.pb.cc)
+target_link_libraries(test_tree gtest gtest_main glog protobuf)
 add_test(NAME test_tree COMMAND test_tree)
 endif()
 

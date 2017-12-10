@@ -20,7 +20,7 @@ class GoAction{
         //template<>
         // choose action 
 
-        void play(const Tensor<CPUContext>& probability){
+        void play(Tensor<CPUContext>& probability){
             
 
             
@@ -33,6 +33,24 @@ class GoAction{
         int x_;
         int y_;
         //std::vector<>
+};
+
+
+class ChessAction{
+    public:
+        ChessAction(){
+
+        }
+        ~ChessAction(){
+
+        }
+
+        void play(Tensor<CPUContext>& probability){
+
+        }
+
+        
+
 };
 
 
