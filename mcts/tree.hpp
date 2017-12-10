@@ -80,7 +80,7 @@ template<typename State>
 class Tree{
     typedef typename map<unsigned long, Node<State>* >::iterator Iterator;
     public:
-        Tree(int L):L_(L), counter_(0){
+        Tree(int L):L_(L), counter_(-1){
 
         }
         ~Tree(){
