@@ -31,12 +31,16 @@ TEST(TreeTest, AddDeleteNode){
     tree->add_node(node3,node4);
     tree->add_node(node, node5);
     tree->travel(node);
+    tree->find(1);
     DLOG(INFO)<< tree->size();
     tree->clear_node(node3);
     tree->clear_node(node5);
     DLOG(INFO)<< tree->size();
     tree->travel(node);
     tree->clear_node(node5);
+
+
+
 
 }
 

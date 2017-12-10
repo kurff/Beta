@@ -114,13 +114,23 @@ class Tree{
             return true;
         }
 
+        Node<State>* find(int index){
+            Iterator it = nodes_.find(index);
+            if(it == nodes_.end()){
+                LOG(INFO)<< "can not find " << index;
+            }else{
+                LOG(INFO)<<"find "<< index;
+            }
+            return it->second;
+        }
+
 
         void travel(Node<State>* root){       
             queue<Node<State>* > cache;
             cache.push(root);
             while(cache.size()){
                 Node<State>* ele = cache.front();
-                DLOG(INFO)<<"visit "<< ele->name()<<" child size: "<< ele->schild().size();
+                DLOG(INFO)<<"visit "<< ele->name()<<" index: "<<ele->index()<<" child size: "<< ele->schild().size();
                 for(Iterator it = ele->schild().begin(); it != ele->schild().end(); ++ it){
                     cache.push(it->second);
                 }
