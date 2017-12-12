@@ -11,7 +11,9 @@
 
 #include "glog/logging.h"
 
+#include <thread>
 #include <mutex>
+#include <condition_variable>
 
 using namespace std;
 
@@ -46,6 +48,26 @@ class Node{
         Node<State>* & sparent(){return parent_;}
         bool & sflag(){return flag_;}
 
+        void set_child(){
+            lock_guard<mutex> lock(mutex_);
+            
+            
+        }
+
+        void set_index(int index){
+             lock_guard<mutex> lock(mutex_);
+             index_ = index;
+        }
+        void set_parent(Node<State>* parent){
+            lock_guard<mutex> lock(mutex_);
+            parent_ = parent;
+        }
+        void set_flag(int flag){
+            lock_guard<mutex> lock(mutex_);
+            flag_ = flag;
+        }
+
+
         
         const float N(){return N_;}
         const float W(){return W_;}
@@ -57,6 +79,7 @@ class Node{
         const map<unsigned long, Node<State> * > child(){return child_;}
         const Node<State>* parent(){return parent_;}
         const bool flag(){return flag_;}
+
 
     
 
@@ -72,6 +95,7 @@ class Node{
         float P_;
         float U_;
         bool flag_; // if flag == TRUE, keep else remove
+        mutex mutex_;
         //static int index;
 };
 
