@@ -8,7 +8,29 @@ using namespace caffe2;
 namespace Beta{
 
 
-class GoAction{
+class Action{
+    public:
+        Action(){
+
+        }
+
+        ~Action(){
+
+        }
+
+        virtual void play(Tensor<CPUContext>& probability) = 0;
+        
+
+    protected: 
+
+
+
+}
+
+
+
+
+class GoAction: public Action{
     public:
         GoAction():x_(0),y_(0){
 
@@ -26,6 +48,8 @@ class GoAction{
             
         }
 
+
+
         int x(){return x_;}
         int y(){return y_;}
         
@@ -36,7 +60,7 @@ class GoAction{
 };
 
 
-class ChessAction{
+class ChessAction: public Action{
     public:
         ChessAction(){
 

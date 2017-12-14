@@ -7,8 +7,12 @@ namespace Beta{
 
     class Network{
         public:
-            Network(){}
-            ~Network(){}
+            Network(){
+
+            }
+            ~Network(){
+                
+            }
 
         public:
             void forward(const Tensor<CPUContext>& inputs, 

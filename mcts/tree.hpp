@@ -14,6 +14,10 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <functional>
+#include "core/network.hpp"
+#include "core/context.hpp"
+
 
 using namespace std;
 
@@ -25,13 +29,14 @@ class Node{
     public:
         Node(string name):N_(0.0f),W_(0.0f),Q_(0.0f),P_(0.0f), index_(0), name_(name), flag_(true), parent_(nullptr){
             child_.clear();
-            
+            node_state_ = shared_ptr<State>(new State());
             
         }
 
 
 
         ~Node(){
+
 
         }
 
@@ -43,10 +48,27 @@ class Node{
         //float& sN(){return N_;}
         
 
-        unsigned long & sindex(){return index_;}
-        map<unsigned long, Node<State>* >& schild(){return child_;}
-        Node<State>* & sparent(){return parent_;}
-        bool & sflag(){return flag_;}
+        unsigned long & sindex(){
+            lock_guard<mutex> lock(mutex_);
+            return index_;
+        }
+        map<unsigned long, Node<State>* >& schild(){
+            lock_guard<mutex> lock(mutex_);
+            return child_;
+        }
+        Node<State>* & sparent(){
+            lock_guard<mutex> lock(mutex_);
+            return parent_;
+        }
+        bool & sflag(){
+            lock_guard<mutex> lock(mutex_);
+            return flag_;
+        }
+
+        State& sstate(){
+            lock_guard<mutex> lock(mutex_);
+            return *(node_state_.get());
+        }
 
         void set_child(){
             lock_guard<mutex> lock(mutex_);
@@ -69,24 +91,24 @@ class Node{
 
 
         
-        const float N(){return N_;}
-        const float W(){return W_;}
-        const float Q(){return Q_;}
-        const float P(){return P_;}
-        const float U(){return U_;}
-        const string name(){return name_;}
-        const unsigned long index(){return index_;}
-        const map<unsigned long, Node<State> * > child(){return child_;}
-        const Node<State>* parent(){return parent_;}
-        const bool flag(){return flag_;}
-
+        const float N(){lock_guard<mutex> lock(mutex_);return N_;}
+        const float W(){lock_guard<mutex> lock(mutex_);return W_;}
+        const float Q(){lock_guard<mutex> lock(mutex_);return Q_;}
+        const float P(){lock_guard<mutex> lock(mutex_);return P_;}
+        const float U(){lock_guard<mutex> lock(mutex_);return U_;}
+        const string name(){lock_guard<mutex> lock(mutex_);return name_;}
+        const unsigned long index(){lock_guard<mutex> lock(mutex_);return index_;}
+        const map<unsigned long, Node<State> * > child(){lock_guard<mutex> lock(mutex_);return child_;}
+        const Node<State>* parent(){lock_guard<mutex> lock(mutex_);return parent_;}
+        const bool flag(){lock_guard<mutex> lock(mutex_);return flag_;}
+        const State& state(){lock_guard<mutex> lock(mutex_);return *(state_.get());}
 
     
 
     protected:
         map<unsigned long, Node<State> * > child_;
         Node<State>* parent_;
-        State state_;
+        shared_ptr<State> node_state_;
         unsigned long index_;
         string name_;
         float N_;
@@ -100,9 +122,10 @@ class Node{
 };
 
 
-template<typename State>
+template<typename State, typename Action>
 class Tree{
     typedef typename map<unsigned long, Node<State>* >::iterator Iterator;
+    typedef typename queue<Node<State>* >::iterator QIterator;
     public:
         Tree(int L):L_(L), counter_(-1){
 
@@ -201,6 +224,17 @@ class Tree{
                 float maxQ = 0;
 
 
+                if(ele->schild().size() ==0){
+
+                    // push leaf node
+                    {
+                        //lock_guard<mutex> lock(mutex_);
+                        leafs_.push(ele);
+                    }
+
+
+                }
+
                 for(Iterator it = ele->schild().begin(); it != ele->schild().end(); ++ it){
                     if(maxQ <= it->second->Q() + it->second->U()){
                         maxQ = it->second->Q() + it->second->U();
@@ -209,6 +243,7 @@ class Tree{
                     
                     cache.push(best);
                 }
+
                 cache.pop();
 
             }
@@ -216,9 +251,25 @@ class Tree{
             
         }
         void expand_and_evaluate(){
+            // add child node into leaf node
+            
+            for(QIterator it = leafs_.begin(); it != leafs_.end(); ++ it ){
+                contex_->get_legal_action(it->state());
+                for(int i = 0; i < context_->size_legal_action(); ++ i){
+                    Node<State>* node = new Node<State> (std::to_string(counter_+1));
+                    add_node(*it, node);
+                }
+            }
+
+
+
+
+
 
 
             // push leaf node into leafs_ for evaluation
+
+
 
         }
         void backup(){
@@ -226,6 +277,8 @@ class Tree{
         }
 
         void run(){
+
+
             select();
             expand_and_evaluate();
             backup();
@@ -244,9 +297,20 @@ class Tree{
 
     protected:
         std::map<unsigned long, Node<State>* > nodes_;
+        vector<thread> thread_pool_;
+        queue<function<void (Node<State>* ) > > tasks_;
         queue<Node<State>* > leafs_;
+        shared_ptr<Network> network_;
+        shared_ptr<Context<State, Action> > context_;
         unsigned long counter_;
+
+
+
+
+
+        mutex mutex_;
         int L_;
+
 
 };
 
